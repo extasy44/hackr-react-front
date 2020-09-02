@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Router from 'next/router';
 import Link from 'next/link';
@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Layout from '../components/Layout';
 import { showSuccessMessage, showErrorMessage } from '../helpers/alert';
 import { API } from '../config';
+import { authenticate, isAuth } from '../helpers/auth';
 
 const Login = () => {
   const [state, setState] = useState({
@@ -15,6 +16,10 @@ const Login = () => {
     success: '',
     buttonText: 'Login'
   });
+
+  useEffect(() => {
+    isAuth() && Router.push('/');
+  }, []);
 
   const { email, password, error, success, buttonText } = state;
 
@@ -37,13 +42,19 @@ const Login = () => {
         email,
         password
       });
-      console.log(response);
+
       setState({
         email: '',
         password: '',
         buttonText: 'Logged In',
         success: response.data.message
       });
+
+      authenticate(response, () =>
+        isAuth() && isAuth().role === 'admin'
+          ? Router.push('/admin')
+          : Router.push('/user')
+      );
     } catch (error) {
       console.log(error);
       setState({
@@ -86,6 +97,7 @@ const Login = () => {
     <Layout>
       <div className="col-md-6 offset-md-3">
         <h1>Login</h1>
+        {JSON.stringify(isAuth())}
         <br />
         {success && showSuccessMessage(success)}
         {error && showErrorMessage(error)}

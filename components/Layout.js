@@ -4,6 +4,8 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
+import { isAuth, logout } from '../helpers/auth';
+
 Router.onRouteChangeStart = (url) => NProgress.start();
 Router.onRouteChangeComplete = (url) => NProgress.done();
 Router.onRouteChangeError = (url) => NProgress.done();
@@ -37,20 +39,53 @@ const Layout = ({ children }) => {
             <a className="nav-link text-dark">Home</a>
           </Link>
         </li>
-        <li className="nav-item">
-          <Link href="/login">
-            <a className="nav-link text-dark">
-              <span className="fa fa-sign-in"></span> Log In
+
+        {!isAuth() && (
+          <React.Fragment>
+            <li className="nav-item ml-auto">
+              <Link href="/login">
+                <a className="nav-link text-dark">
+                  <span className="fa fa-sign-in"></span> Login
+                </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/register">
+                <a className="nav-link text-dark ">
+                  <span className="fa fa-user"></span> Register
+                </a>
+              </Link>
+            </li>
+          </React.Fragment>
+        )}
+
+        {isAuth() && isAuth().role === 'admin' && (
+          <li className="nav-item ml-auto">
+            <Link href="/admin">
+              <a className="nav-link text-dark ">
+                <span className="fa fa-user"></span> Admin
+              </a>
+            </Link>
+          </li>
+        )}
+
+        {isAuth() && isAuth().role === 'subscriber' && (
+          <li className="nav-item ml-auto">
+            <Link href="/User">
+              <a className="nav-link text-dark ">
+                <span className="fa fa-user"></span> User
+              </a>
+            </Link>
+          </li>
+        )}
+
+        {isAuth() && (
+          <li className="nav-item">
+            <a href="#" className="nav-link text-dark" onClick={logout}>
+              <span className="fa fa-sign-out"></span> Logout
             </a>
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link href="/register">
-            <a className="nav-link text-dark ">
-              <span className="fa fa-user"></span> Register
-            </a>
-          </Link>
-        </li>
+          </li>
+        )}
       </ul>
     </div>
   );
