@@ -1,0 +1,13 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+#nprogress .bar {
+  height: 5px !important;
+  background-color: cadetblue;
+}
+
+/* NAV */
+.nav-link .fa {
+  font-size: 20px;
+}
