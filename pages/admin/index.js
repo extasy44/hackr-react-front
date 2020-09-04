@@ -1,11 +1,8 @@
 import Layout from '../../components/Layout';
+import withAdmin from '../withAdmin';
 
-const Admin = () => {
-  return (
-    <Layout>
-      <h1>Admin Page</h1>
-    </Layout>
-  );
+const Admin = ({ user, token }) => {
+  return <Layout>{JSON.stringify(user)}</Layout>;
 };
 
-export default Admin;
+export default withAdmin(Admin);

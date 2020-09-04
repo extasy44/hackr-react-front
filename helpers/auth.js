@@ -18,10 +18,31 @@ export const removeCookie = (key) => {
 };
 
 //get token from cookie
-export const getCookie = (key) => {
-  if (process.browser) {
-    return cookie.get(key);
+export const getCookie = (key, req) => {
+  return process.browser
+    ? getCookieFromBrowser(key)
+    : getCookieFromServer(key, req);
+};
+
+export const getCookieFromBrowser = (key) => {
+  return cookie.get(key);
+};
+
+export const getCookieFromServer = (key, req) => {
+  if (!req.headers.cookie) {
+    return undefined;
   }
+
+  let token = req.headers.cookie
+    .split(';')
+    .find((c) => c.trim().startsWith(`${key}=`));
+  if (!token) {
+    return undefined;
+  }
+
+  let tokenValue = token.split('=')[1];
+  console.log('getCookieFromServer', tokenValue);
+  return tokenValue;
 };
 
 //set user in local storage

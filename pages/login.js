@@ -95,13 +95,19 @@ const Login = () => {
 
   return (
     <Layout>
-      <div className="col-md-6 offset-md-3">
-        <h1>Login</h1>
+      <div
+        className="col-md-6 offset-md-3 p-4 bg-light"
+        style={{ border: '1px solid grey', borderRadius: '20px' }}
+      >
+        <h2>Login</h2>
         {JSON.stringify(isAuth())}
         <br />
         {success && showSuccessMessage(success)}
         {error && showErrorMessage(error)}
         {LoginForm()}
+        <Link href="/auth/password/forgot">
+          <a className="text-info float-right">Forgot Password</a>
+        </Link>
       </div>
     </Layout>
   );

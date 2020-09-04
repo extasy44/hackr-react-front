@@ -45,14 +45,14 @@ const Layout = ({ children }) => {
             <li className="nav-item ml-auto">
               <Link href="/login">
                 <a className="nav-link text-dark">
-                  <span className="fa fa-sign-in"></span> Login
+                  <span className="fa fa-sign-in" /> Login
                 </a>
               </Link>
             </li>
             <li className="nav-item">
               <Link href="/register">
                 <a className="nav-link text-dark ">
-                  <span className="fa fa-user"></span> Register
+                  <span className="fa fa-user" /> Register
                 </a>
               </Link>
             </li>
@@ -63,7 +63,7 @@ const Layout = ({ children }) => {
           <li className="nav-item ml-auto">
             <Link href="/admin">
               <a className="nav-link text-dark ">
-                <span className="fa fa-user"></span> Admin
+                <span className="fa fa-user" /> Admin
               </a>
             </Link>
           </li>
@@ -71,9 +71,9 @@ const Layout = ({ children }) => {
 
         {isAuth() && isAuth().role === 'subscriber' && (
           <li className="nav-item ml-auto">
-            <Link href="/User">
+            <Link href="/user">
               <a className="nav-link text-dark ">
-                <span className="fa fa-user"></span> User
+                <span className="fa fa-user" /> User
               </a>
             </Link>
           </li>

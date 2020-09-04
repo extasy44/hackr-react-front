@@ -101,13 +101,15 @@ const Register = () => {
 
   return (
     <Layout>
-      <div className="col-md-6 offset-md-3">
-        <h1>Register</h1>
+      <div
+        className="col-md-6 offset-md-3 p-4 bg-light"
+        style={{ border: '1px solid grey', borderRadius: '20px' }}
+      >
+        <h2>Register</h2>
         <br />
         {success && showSuccessMessage(success)}
         {error && showErrorMessage(('error : ', error))}
         {RegisterForm()}
-        <hr />
       </div>
     </Layout>
   );

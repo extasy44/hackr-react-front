@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
+import axios from 'axios';
+import { API } from '../../config';
+import { getCookie } from '../../helpers/auth';
+import withUser from '../withUser';
 
-const User = () => {
-  return (
-    <Layout>
-      <h1>User Page</h1>
-    </Layout>
-  );
+const User = ({ user, token }) => {
+  return <Layout>{JSON.stringify(user)}</Layout>;
 };
 
-export default User;
+export default withUser(User);
