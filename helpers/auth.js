@@ -41,7 +41,6 @@ export const getCookieFromServer = (key, req) => {
   }
 
   let tokenValue = token.split('=')[1];
-  console.log('getCookieFromServer', tokenValue);
   return tokenValue;
 };
 
@@ -84,5 +83,17 @@ export const isAuth = () => {
 export const logout = () => {
   removeCookie('token');
   removeLocalStorage('user');
-  Router.push('/login');
+  Router.push('/');
+};
+
+export const updateUsers = (user, next) => {
+  if (process.browser) {
+    if (localStorage.getItem('user')) {
+      let auth = JSON.parse(localStorage.getItem('user'));
+
+      auth = user;
+      localStorage.setItem('user', JSON.stringify(auth));
+      next();
+    }
+  }
 };

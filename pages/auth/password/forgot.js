@@ -7,7 +7,7 @@ import Layout from '../../../components/Layout';
 const ForgotPassword = () => {
   const [state, setState] = useState({
     email: '',
-    buttonText: 'Forgot Password',
+    buttonText: 'Send Reset Link',
     success: '',
     error: ''
   });
@@ -34,7 +34,7 @@ const ForgotPassword = () => {
       setState({
         ...state,
         email: '',
-        buttonText: 'Forgot Password',
+        buttonText: 'Send Reset Link',
         error: error.response.data.error
       });
     }

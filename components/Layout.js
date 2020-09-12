@@ -34,25 +34,43 @@ const Layout = ({ children }) => {
   const nav = () => (
     <div className="nav-container">
       <ul className="nav nav-tabs">
-        <li className="nav-item">
+        <li>
           <Link href="/">
-            <a className="nav-link text-dark">Home</a>
+            <a>
+              <i
+                className="fa fa-code text-primary ml-2 mt-1"
+                style={{ fontSize: '2rem', fontWeight: 'bold' }}
+              />
+            </a>
+          </Link>
+        </li>
+        <li className="nav-item ml-auto">
+          <Link href="/user/link/create">
+            <a
+              className="nav-link btn btn-outline-primary"
+              style={{ borderRadius: '0px' }}
+            >
+              <i className="fa fa-plus-square"></i>{' '}
+              <span className="nav-content">Submit a course</span>
+            </a>
           </Link>
         </li>
 
         {!isAuth() && (
           <React.Fragment>
-            <li className="nav-item ml-auto">
+            <li className="nav-item">
               <Link href="/login">
                 <a className="nav-link text-dark">
-                  <span className="fa fa-sign-in" /> Login
+                  <i className="fa fa-sign-in" />{' '}
+                  <span className="nav-content">Login</span>
                 </a>
               </Link>
             </li>
             <li className="nav-item">
               <Link href="/register">
                 <a className="nav-link text-dark ">
-                  <span className="fa fa-user" /> Register
+                  <i className="fa fa-user" />{' '}
+                  <span className="nav-content">Register</span>
                 </a>
               </Link>
             </li>
@@ -60,20 +78,22 @@ const Layout = ({ children }) => {
         )}
 
         {isAuth() && isAuth().role === 'admin' && (
-          <li className="nav-item ml-auto">
+          <li className="nav-item">
             <Link href="/admin">
               <a className="nav-link text-dark ">
-                <span className="fa fa-user" /> Admin
+                <i className="fa fa-id-card" />{' '}
+                <span className="nav-content">Admin</span>
               </a>
             </Link>
           </li>
         )}
 
-        {isAuth() && isAuth().role === 'subscriber' && (
-          <li className="nav-item ml-auto">
+        {isAuth() && (
+          <li className="nav-item">
             <Link href="/user">
               <a className="nav-link text-dark ">
-                <span className="fa fa-user" /> User
+                <i className="fa fa-user" />{' '}
+                <span className="nav-content">{isAuth().name}</span>
               </a>
             </Link>
           </li>
@@ -82,7 +102,8 @@ const Layout = ({ children }) => {
         {isAuth() && (
           <li className="nav-item">
             <a href="#" className="nav-link text-dark" onClick={logout}>
-              <span className="fa fa-sign-out"></span> Logout
+              <i className="fa fa-sign-out"></i>{' '}
+              <span className="nav-content">Logout</span>
             </a>
           </li>
         )}

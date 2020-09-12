@@ -35,7 +35,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setState({ ...state, buttonText: 'Loggin In' });
+    setState({ ...state, buttonText: 'Logging In' });
 
     try {
       const response = await axios.post(`${API}/login`, {
@@ -88,7 +88,7 @@ const Login = () => {
         />
       </div>
       <div className="form-group">
-        <button className="btn btn-outline-dark"> {buttonText} </button>
+        <button className="btn btn-outline-primary"> {buttonText} </button>
       </div>
     </form>
   );
@@ -99,15 +99,17 @@ const Login = () => {
         className="col-md-6 offset-md-3 p-4 bg-light"
         style={{ border: '1px solid grey', borderRadius: '20px' }}
       >
-        <h2>Login</h2>
-        {JSON.stringify(isAuth())}
-        <br />
-        {success && showSuccessMessage(success)}
-        {error && showErrorMessage(error)}
-        {LoginForm()}
-        <Link href="/auth/password/forgot">
-          <a className="text-info float-right">Forgot Password</a>
-        </Link>
+        <div>
+          <h2>Login</h2>
+          {JSON.stringify(isAuth())}
+          <br />
+          {success && showSuccessMessage(success)}
+          {error && showErrorMessage(error)}
+          {LoginForm()}
+          <Link href="/auth/password/forgot">
+            <a className="text-info pull-right">Forgot Password</a>
+          </Link>
+        </div>
       </div>
     </Layout>
   );

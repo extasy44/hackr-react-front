@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Router from 'next/router';
-import Layout from '../components/Layout';
-import { showSuccessMessage, showErrorMessage } from '../helpers/alert';
-import { API } from '../config';
-import { isAuth } from '../helpers/auth';
-import CategoryFormBlock from '../components/block/CategoryFormBlock';
+import Layout from '../../../components/Layout';
+import { showSuccessMessage, showErrorMessage } from '../../../helpers/alert';
+import { API } from '../../../config';
+import { updateUsers } from '../../../helpers/auth';
+import CategoryFormBlock from '../../../components/block/CategoryFormBlock';
+import withUser from '../../withUser';
 
-const Register = () => {
+const Profile = ({ user, token }) => {
   const [state, setState] = useState({
-    name: '',
-    email: '',
+    name: user.name,
+    email: user.email,
     password: '',
     error: '',
     success: '',
-    buttonText: 'Register',
-    categories: [],
+    buttonText: 'Update',
+    categories: user.categories,
     disabled: false,
     loadedCategories: []
   });
@@ -31,10 +32,6 @@ const Register = () => {
     loadedCategories,
     disabled
   } = state;
-
-  useEffect(() => {
-    isAuth() && Router.push('/');
-  }, []);
 
   useEffect(() => {
     loadCategories();
@@ -65,43 +62,48 @@ const Register = () => {
       [name]: e.target.value,
       error: '',
       success: '',
-      buttonText: 'Register'
+      buttonText: 'Update'
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setState({ ...state, buttonText: 'Registering' });
+    setState({ ...state, buttonText: 'Updating..' });
 
     try {
-      const response = await axios.post(`${API}/register`, {
-        name,
-        email,
-        password,
-        categories
-      });
+      const response = await axios.put(
+        `${API}/user`,
+        {
+          name,
+          password,
+          categories
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
-      setState({
-        ...state,
-        name: '',
-        email: '',
-        password: '',
-        buttonText: 'Submitted',
-        disabled: true,
-        success: response.data.message
+      updateUsers(response.data, () => {
+        setState({
+          ...state,
+          password: '',
+          buttonText: 'Update',
+          success: 'Profile has been updated'
+        });
       });
     } catch (error) {
-      console.log(error);
       setState({
         ...state,
-        buttonText: 'Register',
+        buttonText: 'Update',
         error: error.response.data.error
       });
     }
   };
 
-  const RegisterForm = () => (
+  const UpdateForm = () => (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
         <input
@@ -121,6 +123,7 @@ const Register = () => {
           className="form-control"
           placeholder="email"
           required
+          disabled
         />
       </div>
       <div className="form-group">
@@ -151,10 +154,7 @@ const Register = () => {
       </div>
       <hr />
       <div className="form-group">
-        <button className="btn btn-outline-primary" disabled={disabled}>
-          {' '}
-          {buttonText}{' '}
-        </button>
+        <button className="btn btn-outline-primary"> {buttonText} </button>
       </div>
     </form>
   );
@@ -165,14 +165,14 @@ const Register = () => {
         className="col-md-6 offset-md-3 p-4 bg-light"
         style={{ border: '1px solid grey', borderRadius: '20px' }}
       >
-        <h2>Register</h2>
+        <h2>Update Profile</h2>
         <br />
         {success && showSuccessMessage(success)}
         {error && showErrorMessage(('error : ', error))}
-        {RegisterForm()}
+        {UpdateForm()}
       </div>
     </Layout>
   );
 };
 
-export default Register;
+export default withUser(Profile);
