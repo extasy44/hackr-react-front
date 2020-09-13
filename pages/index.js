@@ -75,27 +75,27 @@ const Home = ({ categories }) => {
             {moment(link.createdAt).fromNow()} by {link.postedBy.name}
           </div>
           <div className="mt-1">
-            <button
-              className="btn btn-primary mr-2 p-1"
+            <span
+              className="badge badge-info mr-2 p-1"
               style={{ fontSize: '0.7rem' }}
               value={link.type}
             >
               {link.type}
-            </button>
-            <button
-              className="btn btn-primary mr-2 p-1"
+            </span>
+            <span
+              className="badge badge-info mr-2 p-1"
               style={{ fontSize: '0.7rem' }}
               value={link.medium}
             >
               {link.medium}
-            </button>
-            <button
-              className="btn btn-primary mr-2 p-1"
+            </span>
+            <span
+              className="badge badge-info mr-2 p-1"
               style={{ fontSize: '0.7rem' }}
               value={link.level}
             >
               {link.level}
-            </button>
+            </span>
 
             <span className="mr-2 p-1" style={{ fontSize: '1rem' }}>
               {link.categories.map((category, i) => (

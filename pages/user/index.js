@@ -28,7 +28,7 @@ const User = ({ user, token, userLinks }) => {
     } catch (error) {}
   };
 
-  const listOfLinks = () => {
+  const renderLinks = () => {
     return userLinks.map((link) => (
       <div
         className="row alert alert-light p-2 ml-1 mr-1"
@@ -50,16 +50,22 @@ const User = ({ user, token, userLinks }) => {
           </div>
           <div className="mt-1">
             <span
-              className="btn btn-primary mr-2 p-1"
+              className="badge badge-info mr-2 p-1"
               style={{ fontSize: '0.7rem' }}
             >
               {link.type}
             </span>
             <span
-              className="btn btn-primary mr-2 p-1"
+              className="badge badge-info mr-2 p-1"
               style={{ fontSize: '0.7rem' }}
             >
               {link.medium}
+            </span>
+            <span
+              className="badge badge-info mr-2 p-1"
+              style={{ fontSize: '0.7rem' }}
+            >
+              {link.level}
             </span>
             <span className="mr-2 p-1" style={{ fontSize: '1rem' }}>
               {link.categories.map((category, i) => (
@@ -142,7 +148,7 @@ const User = ({ user, token, userLinks }) => {
             </div>
           </div>
         ) : (
-          listOfLinks()
+          renderLinks()
         )}
       </div>
     </Layout>

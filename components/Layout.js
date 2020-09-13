@@ -34,12 +34,13 @@ const Layout = ({ children }) => {
   const nav = () => (
     <div className="nav-container">
       <ul className="nav nav-tabs">
-        <li>
+        <li className="ml-2">
           <Link href="/">
             <a>
-              <i
-                className="fa fa-code text-primary ml-2 mt-1"
-                style={{ fontSize: '2rem', fontWeight: 'bold' }}
+              <img
+                src="/static/images/Learncoding_logo3.png"
+                height="42px"
+                className="p-2"
               />
             </a>
           </Link>

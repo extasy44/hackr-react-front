@@ -9,6 +9,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Layout from '../../components/Layout';
 import PlaceHolder from '../../components/PlaceHolder';
 import { API, APP_NAME } from '../../config';
+import { isAuth } from '../../helpers/auth';
 
 const Links = ({
   query,
@@ -28,6 +29,7 @@ const Links = ({
     medium: [],
     level: []
   });
+  const [subscribed, setSubscribed] = useState(false);
 
   const head = () => (
     <Head>
@@ -41,7 +43,17 @@ const Links = ({
   const [popularLinks, setPopularLinks] = useState([]);
   useEffect(() => {
     loadPopularLinks();
+    checkSubscribed();
   }, []);
+
+  const checkSubscribed = () => {
+    if (isAuth()) {
+      const subscribe = isAuth().categories?.indexOf(category._id);
+      if (subscribe !== -1) {
+        setSubscribed(true);
+      }
+    }
+  };
 
   const loadPopularLinks = async () => {
     const response = await axios.get(`${API}/link/popular/${category.slug}`);
@@ -298,6 +310,14 @@ const Links = ({
                 />
                 {'   '}
                 {category.name} Tutorials and Courses
+                {subscribed && (
+                  <span
+                    class="badge badge-success ml-2 p-1"
+                    style={{ fontSize: '0.8rem' }}
+                  >
+                    Subscribed
+                  </span>
+                )}
               </h1>
             </div>
             <div className="text-muted mt-3">
